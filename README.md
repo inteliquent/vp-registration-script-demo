@@ -66,7 +66,7 @@ The script associated with these phone numbers can be edited in the Voyant Admin
 
 **Voyant Admin Portal Example**
 
-![Edit via Admin Portal](https://www.dropbox.com/s/cyrt2n6adahbzjt/Screenshot%202019-11-05%2010.59.27.png?dl=1)
+![Edit via Admin Portal](https://previews.dropbox.com/p/thumb/AAmRGY_GR47iBX4325j-gS_jeV4XB0Qz4b0_Iuy4d-TVnZPxzXWwXnL0XjoC6YxEPiVFved8mRHEs5CsMzelyZdjKMADSr14_Zi-CeqDpWODhK_efMQBFdaXDp-MemRecknM6ygGMrc7AKmbFFhIcjJmLsyFYW9gS1B7dqWRd2AlFPOm8mkqhmP79M4DmaMaTCUjKheVtZKSy2Udcrq1Phts7oH5f6VRDcrJPZfrdnDn8OAHECcg_oP1B4sgdK67kErpH0FXO72DBlr5Iow1dKPVtbXqr5AHXjA5TIJW5Ignjg8VQycg-9jAWlsKjV7UgGBG4YfG1K7wV7biRPwphNImhRAR0SC3vODlSc4R3DF72IWijtARGvTS-92xm1RwX9zvfru5mHpQZyrku9VDrb4YdELhs4mm2bb9TCutovW8Vw/p.png?size=2048x1536&size_mode=3)
 
 **REST API Example**
 
@@ -92,7 +92,7 @@ The script is configured to dial out to a registered SIP User Agent. To test thi
 
 After opening the app for the first time, scan this QR code to provision the application for this demo.
 
-![Provisioning QR Code](https://www.dropbox.com/s/i39vopm1dmld67p/cloudsoftphone-qr-ADHOCLABS-1-e4aa4d23213daeee3612c07af8a009ad-live-660px.png%27?dl=1)
+![Provisioning QR Code](https://previews.dropbox.com/p/thumb/AAnRROADk4PUsrf-FcDiqEQV5gx51diQ4bp6ubRecCEnb16-ih0eu7uEmDsvNXecBytXfFRdxVA6HY4PX_fd0zP_YFhi95a1dKz5uo2Kc-JFCKda_GHLs7iAQ07tF5B_TVqlSU4uuopHyavhGO1eNRnhqU8cb3-CSlaCRVGcKje8iG9xfstiFyOOs5MUpuQv63Put8n0vdCH0bNujhCD7tGPaBEL2-HVlluSTXbVIim5pzzr1N-sVQBizey7Hwt4iKbCjXAImUX5yXWVFOoaqX6dI5eR5uPA3V37QsjtXkZyqvyyuBhsDMUn5HnlY50lZxW0EeDcBd69Ivcs5u1PEmpZ02LZotFmknYRqAuDRWOJtHXke1edEnklS1E4AAJtiLYy6tpTrAhXMfE1cRqYM1cy2pD8vvFOTsvjqJwVJnlKIPRGXqgZCqe-rLAgsrfst3keJBK6epf5GO1Uc5sb3bli8FiDslt8CVjhuOPsqihZaKB7K2lXH6UyqEFtAZmTA1RvV6tmVkmEMETfs0MyL4Dp/p.png?fv_content=true&size_mode=5)
 
 The app will register via SIP and will ring if one of the test numbers (associated with the script in this repository) are called.
 
