@@ -51,6 +51,12 @@
 
             <!-- Use the Dial action to initiate a B-Leg out to the customer -->
             <dial alias="dial_action0" group="forward_actions" caller="{{INBOUND_CALLER_NUMBER}}" number="sip:test_endpoint@adhoclabs-outbound.st.sip.global">
+                <!-- 
+                NOTE:
+                The target for the B-Leg of this Dial can be dynamically fetched via a Query verb.
+                Query verbs are useful for more than just POSTing data back to an HTTP endpoint.
+                They can also be used to fetch individual parameters, or entire scripts, from a web server.
+                -->
                 
                 <!-- If using Custom External SIP Authentication, this custom header needs to be passed when dialing registered endpoints -->
                 <header name="X-Global" value="true"></header>
