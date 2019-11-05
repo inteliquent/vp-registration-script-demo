@@ -92,7 +92,7 @@ curl -X GET \
 
 # Testing with a SIP Client
 
-The script is configured to dial out to a registered SIP User Agent. To test this functionality, download the "Cloud SoftPhone" App in the Apple or Google App Stores.
+The script is configured to dial out to a registered SIP User Agent. To test this functionality, download the "Cloud SoftPhone" App in the (Apple App Store)[https://apps.apple.com/us/app/cloud-softphone/id567475545] or (Google Play Store)[https://play.google.com/store/apps/details?id=cz.acrobits.softphone.cloudphone&hl=en_US].
 
 After opening the app for the first time, scan this QR code to provision the application for this demo.
 
