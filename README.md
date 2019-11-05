@@ -94,11 +94,11 @@ curl -X GET \
 
 The script is configured to dial out to a registered SIP User Agent. To test this functionality, download the "Cloud SoftPhone" App in the [Apple App Store](https://apps.apple.com/us/app/cloud-softphone/id567475545) or [Google Play Store](https://play.google.com/store/apps/details?id=cz.acrobits.softphone.cloudphone&hl=en_US).
 
+The app will register via SIP and will ring if one of the test numbers (associated with the script in this repository) are called.
+
 After opening the app for the first time, scan this QR code to provision the application for this demo.
 
 ![Provisioning QR Code](https://www.dropbox.com/s/i39vopm1dmld67p/cloudsoftphone-qr-ADHOCLABS-1-e4aa4d23213daeee3612c07af8a009ad-live-660px.png?dl=0&raw=true)
-
-The app will register via SIP and will ring if one of the test numbers (associated with the script in this repository) are called.
 
 # Further Documentation
 
