@@ -14,11 +14,14 @@ This script accomplishes the following use-case:
 
 # Event Logs
 
-The script will POST events to the following HTTP Request Logger: http://webhook.site/#!/3324d98c-21ec-4fc2-9d9f-84c38f57b77a/0e015977-8a7a-4b1d-90b2-194060b87e61/1
+The script will POST events to the following HTTP Request Logger:
+
+http://webhook.site/#!/3324d98c-21ec-4fc2-9d9f-84c38f57b77a/0e015977-8a7a-4b1d-90b2-194060b87e61/1
 
 
 # Assigning the Script to a Phone Number
 POST https://api.voyant.com/voice/api/{{PHONE_NUMBER}}/script?sessionId={{API_TOKEN}}
+
 BODY: {{SCRIPT XML CONTENT}}
 
 # CURL Example
