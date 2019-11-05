@@ -66,7 +66,7 @@ The script associated with these phone numbers can be edited in the Voyant Admin
 
 **Voyant Admin Portal Example**
 
-![Edit via Admin Portal](https://www.dropbox.com/s/cyrt2n6adahbzjt/Screenshot%202019-11-05%2010.59.27.png?dl=0)
+![Edit via Admin Portal](https://www.dropbox.com/s/cyrt2n6adahbzjt/Screenshot%202019-11-05%2010.59.27.png?dl=1)
 
 **REST API Example**
 
@@ -92,7 +92,7 @@ The script is configured to dial out to a registered SIP User Agent. To test thi
 
 After opening the app for the first time, scan this QR code to provision the application for this demo.
 
-![Provisioning QR Code](https://providers.cloudsoftphone.com/qrcode/accountsettings/1/display/15086/660)
+![Provisioning QR Code](https://www.dropbox.com/s/i39vopm1dmld67p/cloudsoftphone-qr-ADHOCLABS-1-e4aa4d23213daeee3612c07af8a009ad-live-660px.png%27?dl=1)
 
 The app will register via SIP and will ring if one of the test numbers (associated with the script in this repository) are called.
 
