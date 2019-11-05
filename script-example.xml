@@ -12,28 +12,31 @@
 
         <!-- Here we define the Snippet which records a voicemail -->
         <snippet id="take-voicemail">
-
-            <!-- Play the Voicemail Instructions -->
-            <say alias="voicemail_action_say" TEXT="Please leave a message after the tone." target='{{X-OrigCallId}}'>
+            <timeout seconds="1">
                 <onComplete>
+                    <!-- Play the Voicemail Instructions -->
+                    <say alias="voicemail_action_say" TEXT="Please leave a message after the tone." target='{{X-OrigCallId}}'>
+                        <onComplete>
 
-                    <!-- Play the Beep -->
-                    <play src="https://s3.amazonaws.com/s3.bettervoice.com/misc/default_audio/beep-sound.mp3" target='{{X-OrigCallId}}'></play>
+                            <!-- Play the Beep -->
+                            <play src="https://s3.amazonaws.com/s3.bettervoice.com/misc/default_audio/beep-sound.mp3" target='{{X-OrigCallId}}'></play>
 
-                    <!-- Record the voicemail and POST it back to the webservice -->
-                    <record alias="voicemail_action_record" max-duration="120000">
-                        <onComplete _link="LINK" _duration="DURATION">
-                            <query method="post" url="http://webhook.site/3324d98c-21ec-4fc2-9d9f-84c38f57b77a">
-                                <optional name="type" value="voicemail"></optional>
-                                <optional name="callId" value="{{X-OrigCallId}}"></optional>
-                                <optional name="recordingUrl" value="{{LINK}}"></optional>
-                                <optional name="recordingDuration" value="{{DURATION}}"></optional>
-                                <optional name="transcribe" value="true"></optional>
-                            </query>
+                            <!-- Record the voicemail and POST it back to the webservice -->
+                            <record alias="voicemail_action_record" max-duration="120000">
+                                <onComplete _link="LINK" _duration="DURATION">
+                                    <query method="post" url="http://webhook.site/3324d98c-21ec-4fc2-9d9f-84c38f57b77a">
+                                        <optional name="type" value="voicemail"></optional>
+                                        <optional name="callId" value="{{X-OrigCallId}}"></optional>
+                                        <optional name="recordingUrl" value="{{LINK}}"></optional>
+                                        <optional name="recordingDuration" value="{{DURATION}}"></optional>
+                                        <optional name="transcribe" value="true"></optional>
+                                    </query>
+                                </onComplete>
+                            </record>
                         </onComplete>
-                    </record>
+                    </say>
                 </onComplete>
-            </say>
+            </timeout>
         </snippet>
 
         <!-- Here we define the snippet which routes the caller to voicemail if the call is not answered or if the answerer doesn't "Press a key to accept" -->
