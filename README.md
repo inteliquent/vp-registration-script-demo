@@ -2,7 +2,7 @@
 This repository contains information on how to attach a custom call flow Voice API script to a Voyant Phone Number.
 
 # The Script
-This script ([in this repository](https://github.com/inteliquent/vp-registration-script-demo/blob/master/script-example.xml) )accomplishes the following use-case:
+This script ([in this repository](https://github.com/inteliquent/vp-registration-script-demo/blob/master/script-example.xml)) accomplishes the following use-case:
 - We receive the inbound Call (LegA) and:
   - Play ringing in the background
   - Then, we Dial out to the SIP Endpoint for legB
