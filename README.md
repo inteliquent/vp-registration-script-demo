@@ -12,3 +12,44 @@ This script accomplishes the following use-case:
   - Once the call is over, or other significant events occur, we send those events via web hook to a backend for recording.
         
 
+# Event Logs
+
+The script will POST events to the following HTTP Request Logger: http://webhook.site/#!/3324d98c-21ec-4fc2-9d9f-84c38f57b77a/0e015977-8a7a-4b1d-90b2-194060b87e61/1
+
+
+# Assigning the Script to a Phone Number
+POST https://api.voyant.com/voice/api/{{PHONE_NUMBER}}/script?sessionId={{API_TOKEN}}
+BODY: {{SCRIPT XML CONTENT}}
+
+# CURL Example
+
+```
+curl -X POST \
+  'https://api.voyant.com/voice/api/13182495699/script?sessionId={{API_TOKEN}}' \
+  -H 'Accept: */*' \
+  -H 'Accept-Encoding: gzip, deflate' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Connection: keep-alive' \
+  -H 'Content-Length: 7204' \
+  -H 'Content-Type: application/xml' \
+  -H 'Host: api.voyant.com' \
+  -d '<script>
+    <head></head>
+    <body>        
+        <!-- Accept the inbound call -->
+        <accept></accept>
+
+        <!-- Send back 180 ringing -->
+        <ring></ring>
+
+        <!-- Answer the call -->
+        <answer alias="{{X-OrigCallId}}">
+            <!-- When the call connects, execute the "dial_user" snippet, defined above -->
+            <onConnect>
+                <say TEXT="Hello World"></say>
+            </onConnect>
+        </answer>
+    </body>
+</script>'
+```
+
