@@ -44,14 +44,6 @@
             <cancel-timeout target="ring-timeout" />
         </snippet>
 
-        <!-- This is the maximum amount of time that we will allow the outbound call to ring before moving to take a voicemail -->
-        <timeout seconds="20" alias="ring-timeout">
-            <onComplete>                    
-                <route-to-voicemail></route-to-voicemail>
-            </onComplete>
-        </timeout>
-
-
 
         <!-- Here we define a "snippet" to dial the user (B-Leg) -->
         <!-- It is good practice to place your snippets at the top of the script, which is what we're doing here -->
@@ -136,10 +128,20 @@
                 <hangup target-group="forward_actions"></hangup>
                 <run-snippet id="global-hangup"></run-snippet>
             </onDisconnect>
-
-            <!-- When the call connects, execute the "dial_user" snippet, defined above -->
+            
+            <!-- This gets executed once we answer the call -->
             <onConnect>
+                <!-- When the call connects, execute the "dial_user" snippet, defined above -->
                 <run-snippet id="dial_user"></run-snippet>
+                
+                <!-- This is the maximum amount of time that we will allow the outbound call to ring before moving to take a voicemail -->
+                <timeout seconds="20" alias="ring-timeout">
+                    <onComplete>                    
+                        <route-to-voicemail></route-to-voicemail>
+                    </onComplete>
+                </timeout>
+                
+
             </onConnect>
         </answer>
     </body>
