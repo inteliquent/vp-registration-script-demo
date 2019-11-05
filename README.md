@@ -51,7 +51,7 @@ curl -X POST \
 
         <!-- Answer the call -->
         <answer alias="{{X-OrigCallId}}">
-            <!-- When the call connects, execute the "dial_user" snippet, defined above -->
+            <!-- When the call connects, Say "Hello World" -->
             <onConnect>
                 <say TEXT="Hello World"></say>
             </onConnect>
