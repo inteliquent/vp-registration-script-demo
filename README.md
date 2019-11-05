@@ -18,7 +18,7 @@ This script ([in this repository](https://github.com/inteliquent/vp-registration
 
 # Event Logs
 
-The script will POST events to the following HTTP Request Logger:
+The script will POST events to the following HTTP Request Logger using our `query` XML verb:
 
 http://webhook.site/#!/3324d98c-21ec-4fc2-9d9f-84c38f57b77a/0e015977-8a7a-4b1d-90b2-194060b87e61/1
 
