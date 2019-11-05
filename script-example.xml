@@ -1,0 +1,146 @@
+<script>
+    <head></head>
+    <body>        
+
+        <!-- This is a snippet which will get executed when the A-Leg hangs up -->
+        <snippet id="global-hangup">
+            <query method="post" url="http://webhook.site/3324d98c-21ec-4fc2-9d9f-84c38f57b77a">
+                <optional name="type" value="hangup"></optional>
+                <optional name="callId" value="{{X-OrigCallId}}"></optional>
+            </query>
+        </snippet>
+
+        <!-- Here we define the Snippet which records a voicemail -->
+        <snippet id="take-voicemail">
+
+            <!-- Play the Voicemail Instructions -->
+            <say alias="voicemail_action_say" TEXT="Please leave a message after the tone." target='{{X-OrigCallId}}'>
+                <onComplete>
+
+                    <!-- Play the Beep -->
+                    <play src="https://s3.amazonaws.com/s3.bettervoice.com/misc/default_audio/beep-sound.mp3" target='{{X-OrigCallId}}'></play>
+
+                    <!-- Record the voicemail and POST it back to the webservice -->
+                    <record alias="voicemail_action_record" max-duration="120000">
+                        <onComplete _link="LINK" _duration="DURATION">
+                            <query method="post" url="http://webhook.site/3324d98c-21ec-4fc2-9d9f-84c38f57b77a">
+                                <optional name="type" value="voicemail"></optional>
+                                <optional name="callId" value="{{X-OrigCallId}}"></optional>
+                                <optional name="recordingUrl" value="{{LINK}}"></optional>
+                                <optional name="recordingDuration" value="{{DURATION}}"></optional>
+                                <optional name="transcribe" value="true"></optional>
+                            </query>
+                        </onComplete>
+                    </record>
+                </onComplete>
+            </say>
+        </snippet>
+
+        <!-- Here we define the snippet which routes the caller to voicemail if the call is not answered or if the answerer doesn't "Press a key to accept" -->
+        <snippet id="route-to-voicemail">
+            <stop-play target="dial_ringback"></stop-play>
+            <hangup target-group="forward_actions"></hangup>
+            <run-snippet id="take-voicemail"></run-snippet>
+            <cancel-timeout target="ring-timeout" />
+        </snippet>
+
+        <!-- This is the maximum amount of time that we will allow the outbound call to ring before moving to take a voicemail -->
+        <timeout seconds="20" alias="ring-timeout">
+            <onComplete>                    
+                <route-to-voicemail></route-to-voicemail>
+            </onComplete>
+        </timeout>
+
+
+
+        <!-- Here we define a "snippet" to dial the user (B-Leg) -->
+        <!-- It is good practice to place your snippets at the top of the script, which is what we're doing here -->
+        <snippet id="dial_user">
+
+            <!-- Use the Dial action to initiate a B-Leg out to the customer -->
+            <dial alias="dial_action0" group="forward_actions" caller="{{INBOUND_CALLER_NUMBER}}" number="sip:test_endpoint@adhoclabs-outbound.st.sip.global">
+                
+                <!-- If using Custom External SIP Authentication, this custom header needs to be passed when dialing registered endpoints -->
+                <header name="X-Global" value="true"></header>
+
+                <onJoin>
+                    <!-- Stop playing the custom ringback when the two parties are joined -->
+                    <stop-play target="dial_ringback"></stop-play>
+                </onJoin>
+
+                <onRing>
+                    <!-- This sends a webhook when the outbound call begins ringing -->
+                    <query method="post" url="http://webhook.site/3324d98c-21ec-4fc2-9d9f-84c38f57b77a">
+                        <optional name="type" value="dialRinging"></optional>
+                        <optional name="callId" value="{{X-OrigCallId}}"></optional>
+                    </query>
+                </onRing>
+
+                <onConnect>
+                    <!-- This sends a webhook when the outbound call connects -->
+                    <query method="post" url="http://webhook.site/3324d98c-21ec-4fc2-9d9f-84c38f57b77a">
+                        <optional name="type" value="dialAnswered"></optional>
+                        <optional name="callId" value="{{X-OrigCallId}}"></optional>
+                    </query>
+
+                    <!-- This plays the instructions to "Press any key" to accept the call -->
+                    <say alias="dial_action-confirm-human" TEXT="Press any key to accept the call">
+                        <onComplete></onComplete>
+                    </say>
+
+                    <!-- This receives the DTMF event if the user presses a key to accept the call -->
+                    <onDTMF>
+                        <join></join>
+
+                        <!-- If we join together the A & B legs, we will overwrite the timeout that routes the user to Voicemail by redefining the snippet ID -->
+                        <snippet id="route-to-voicemail"></snippet>
+                        <cancel-timeout target="ring-timeout" />
+                    </onDTMF>
+                </onConnect>
+
+                <!-- This hangs up all legs if either party leaves -->
+                <onLeave>
+                    <hangup target-group="forward_actions"></hangup>
+                    <hangup target="{{X-OrigCallId}}"></hangup>
+                </onLeave>
+
+                <!-- This sends a webhook when the outbound call disconnects -->
+                <onDisconnect>
+                    <!-- Semd the caller to the voicemail snippet -->
+                    <run-snippet id="route-to-voicemail"></run-snippet>
+
+                    <!-- This sends a webhook when the outbound call disconnects -->
+                    <query method="post" url="http://webhook.site/3324d98c-21ec-4fc2-9d9f-84c38f57b77a">
+                        <optional name="type" value="dialHangup"></optional>
+                        <optional name="callId" value="{{X-OrigCallId}}"></optional>
+                    </query>
+                </onDisconnect>
+
+            </dial>            
+
+            <!-- Here we are playing ringback to the A-Leg -->
+            <play alias="dial_ringback" src="http://s3.bettervoice.com/misc/default_audio/US_ringback_tone.wav"></play>
+        </snippet>                
+
+        <!-- Accept the inbound call -->
+        <accept></accept>
+
+        <!-- Send back 180 ringing -->
+        <ring></ring>
+
+        <!-- Answer the call -->
+        <answer alias="{{X-OrigCallId}}">
+
+            <!-- When the A-Leg disconnects, force disconnect any dangling B-Legs, and send the Global Hang-up Webhook to the webservice -->
+            <onDisconnect>
+                <hangup target-group="forward_actions"></hangup>
+                <run-snippet id="global-hangup"></run-snippet>
+            </onDisconnect>
+
+            <!-- When the call connects, execute the "dial_user" snippet, defined above -->
+            <onConnect>
+                <run-snippet id="dial_user"></run-snippet>
+            </onConnect>
+        </answer>
+    </body>
+</script>
